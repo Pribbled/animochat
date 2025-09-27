@@ -24,7 +24,7 @@ router.post("/google", async (req, res) => {
         const sessionToken = jwt.sign(
             { email, name: payload.name, picture: payload.picture },
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "24h" }
         );
 
         res.json({ token: sessionToken });
