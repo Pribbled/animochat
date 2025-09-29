@@ -23,7 +23,15 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-const handler = NextAuth({
+// signIn callback that runs on every login attempt; restricts to @dlsu.edu.ph domains only.
+export const signInCallback = async ({ profile }) => {
+    if (profile?.email?.endsWith("@dlsu.edu.ph")) {
+        return true;
+    }
+    return false;
+}
+
+export const authOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,         // OAuth Client ID
@@ -38,15 +46,10 @@ const handler = NextAuth({
     ],
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        // signIn callback that runs on every login attempt; restricts to @dlsu.edu.ph domains only.
-        async signIn({ profile }) {
-            if (profile?.email?.endsWith("@dlsu.edu.ph")) {
-                return true;
-            }
-            return false;
-        }
+        signIn: signInCallback,
     }
-});
+};
 
+const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST };
     
