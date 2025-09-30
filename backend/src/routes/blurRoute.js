@@ -6,7 +6,16 @@ const router = express.Router();
 
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+        cb(null, true);
+    } else {
+        cb(new Error("Only JPG and PNG files are allowed!"), false);
+    }
+};
+
+const upload = multer({ storage, fileFilter });
 
 
 router.post("/profile-pic", upload.single("picture"), async (req, res) => {
