@@ -4,7 +4,7 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit",
+    "test": "set NODE_ENV=test&& node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:win": "set NODE_OPTIONS=--experimental-vm-modules && jest --forceExit",
     "test:watch": "set NODE_OPTIONS=--experimental-vm-modules && jest --watch",
     "test:debug": "set NODE_OPTIONS=--experimental-vm-modules && jest --detectOpenHandles",
@@ -25,7 +25,8 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.20.0",
-    "mongoose": "^8.18.1"
+    "mongoose": "^8.18.1",
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "eslint": "^9.36.0",
