@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import testRoutes from "./routes/testRoute.js";
+import blurRoute from "./routes/blurRoute.js"
 
 dotenv.config();
 connectDB();
@@ -10,6 +11,7 @@ connectDB();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/api/blur", blurRoute)
 
 
 app.use("/api/test", testRoutes);
