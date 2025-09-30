@@ -4,9 +4,10 @@ import sharp from "sharp";
 
 const router = express.Router();
 
-
+//configures multer to store files in memory instead of disk
 const storage = multer.memoryStorage();
 
+//file filter function to allow only JPG and PNG file formats
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
         cb(null, true);
@@ -15,9 +16,16 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
+//initializes multer with storage and file filter
 const upload = multer({ storage, fileFilter });
 
-
+/**
+ * @route   POST /api/blur/profile-pic
+ * @desc    Blurs a JPG/PNG profile picture before saving or displaying
+ * @param {File} picture - profile picture to be blurred
+ * @returns {Object} 200 - Picture blurred successfully
+ * @returns {Object} 500 - Failed to blur picture
+ */
 router.post("/profile-pic", upload.single("picture"), async (req, res) => {
     try {
         if (!req.file) {
